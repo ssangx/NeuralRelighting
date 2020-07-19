@@ -8,7 +8,7 @@ Shen Sang and Manmohan Chandraker
 Code release for our ECCV2020 paper "Single-Shot Neural Relighting and SVBRDFEstimation".
 
 
-**This page is still under-construction. The currently released codes is used for inference with our pre-trained models and captured images.**
+**This page is still under-construction. The currently released codes are used for inference with our pre-trained models and captured images.**
 
 
 
@@ -16,18 +16,16 @@ Code release for our ECCV2020 paper "Single-Shot Neural Relighting and SVBRDFEst
 
 Ensure that the folder structure under `data` is:
 
-    ```
     data
     |-- dataset
     |-- models
     |-- output
     |-- real
-    ```
 
 Put your own test images under `real`. Then run `test_real_env.py` or `test_real_pt.py` to do inference. The estimated albedo, normal, roughness and depth, as well as the relighting images and videos will be shown under 'data/output'.
 
 
 
-## Train
+## Training
 
 Coming soon
