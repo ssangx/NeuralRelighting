@@ -22,6 +22,7 @@ data
 |-- models
 |-- real
 |-- output
+|-- ...
 ```
 
 Put your own test images under `real`. Then run `test_real_env.py` or `test_real_pt.py` to do inference. The estimated albedo, normal, roughness and depth, as well as the relighting images and videos will be shown under `data/output`.
