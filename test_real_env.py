@@ -167,7 +167,7 @@ for _i in range(len(seg_list)):
     else:
         light_t = gen_circular_lights()
 
-    # light_t += [light_s]
+    light_t += [light_s]
 
     input = torch.cat([image, image * seg, seg], 1)
     init_feat = encoder(input)
@@ -232,9 +232,9 @@ for _i in range(len(seg_list)):
         relit_predcas_list += [relit_caspred]
         relit_predcas2_list += [relit_cas2pred]
 
-    # relit_pred_list = relit_pred_list[:-1]
-    # relit_predcas_list = relit_predcas_list[:-1]
-    # relit_predcas2_list = relit_predcas2_list[:-1]
+    relit_pred_list = relit_pred_list[:-1]
+    relit_predcas_list = relit_predcas_list[:-1]
+    relit_predcas2_list = relit_predcas2_list[:-1]
     
     # ---------------- save BRDF reconstruction ------------------------
     albedo_save = 0.5 * (albedo_pred + 1) * seg
