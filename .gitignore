@@ -10,6 +10,5 @@ finetune_env.py
 env_edit.py
 
 dataset/
-env/
 
 data/dataset
