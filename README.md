@@ -1,7 +1,8 @@
 # Single-Shot Neural Relighting and SVBRDF Estimation ([Project](http://cseweb.ucsd.edu/~viscomp/projects/ECCV20NeuralRelighting/))
 
 
-Shen Sang and Manmohan Chandraker
+
+[Shen Sang](https://sites.google.com/view/ssang), [Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/)
 
 
 
@@ -16,11 +17,13 @@ Code release for our ECCV2020 paper "Single-Shot Neural Relighting and SVBRDFEst
 
 Ensure that the folder structure under `data` is:
 
-    data
-    |-- dataset
-    |-- models
-    |-- output
-    |-- real
+```
+data
+|-- dataset
+|-- models
+|-- output
+|-- real
+```
 
 Put your own test images under `real`. Then run `test_real_env.py` or `test_real_pt.py` to do inference. The estimated albedo, normal, roughness and depth, as well as the relighting images and videos will be shown under 'data/output'.
 
