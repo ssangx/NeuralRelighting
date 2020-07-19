@@ -6,7 +6,7 @@
 
 
 
-Code release for our ECCV2020 paper "Single-Shot Neural Relighting and SVBRDFEstimation".
+Code release for our ECCV2020 paper "Single-Shot Neural Relighting and SVBRDF Estimation".
 
 
 **This page is still under-construction. The currently released codes are used for inference with our pre-trained models and captured images.**
@@ -25,7 +25,7 @@ data
 |-- real
 ```
 
-Put your own test images under `real`. Then run `test_real_env.py` or `test_real_pt.py` to do inference. The estimated albedo, normal, roughness and depth, as well as the relighting images and videos will be shown under 'data/output'.
+Put your own test images under `real`. Then run `test_real_env.py` or `test_real_pt.py` to do inference. The estimated albedo, normal, roughness and depth, as well as the relighting images and videos will be shown under `data/output`.
 
 
 
