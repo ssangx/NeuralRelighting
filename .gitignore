@@ -12,3 +12,11 @@ env_edit.py
 dataset/
 
 data/dataset
+
+models/cascade_env.py
+models/cascade_pt.py
+models/cascade2_env.py
+models/cascade2_pt.py
+models/finetune_env.py
+models/initial_env.py
+models/initial_hemi.py

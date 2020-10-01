@@ -28,6 +28,10 @@ data
 Put your own test images under `real`. Then run `test_real_env.py` or `test_real_pt.py` to do inference. The estimated albedo, normal, roughness and depth, as well as the relighting images and videos will be shown under `data/output`.
 
 
+## Data generation
+
+You can download the synthetic dataset [here](https://drive.google.com/file/d/1kmgPzBhhZpozNA7QH2FOmfM51m6CKwNc/view?usp=sharing). It contains all the material and shape parameters (albedo, normal, roughness and depth) used for rendering. There are also image renderings included inside this dataset. We also provide the script `rendering.py` for you to render your own dataset. 
+
 
 ## Training
 
