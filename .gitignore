@@ -22,3 +22,5 @@ models/cascade2_pt.py
 models/finetune_env.py
 models/initial_env.py
 models/initial_hemi.py
+
+clean.py
