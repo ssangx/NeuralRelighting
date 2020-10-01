@@ -13,6 +13,8 @@ dataset/
 
 data/dataset
 
+env/
+
 models/cascade_env.py
 models/cascade_pt.py
 models/cascade2_env.py
