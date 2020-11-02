@@ -35,4 +35,4 @@ You can download the synthetic dataset [here](https://drive.google.com/file/d/1k
 
 ## Training
 
-You can train the model for point light manipulation by yourself, by running 'train_pt.py`.
+You can train the model for point light manipulation by yourself, by running `train_pt.py`.
