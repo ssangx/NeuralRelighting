@@ -8,9 +8,6 @@ class BaseOptions():
         self.parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     def initialize(self, parser):
-        # Base 
-        parser.add_argument('--author', type=str, default='ssang', help='author')
-        
         # Model
         return parser
 
