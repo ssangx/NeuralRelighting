@@ -3,7 +3,7 @@ import torch
 import numpy as np
 
 from utils import logger
-from dataset import synthetic
+from dataset import synthetic_pt
 from options import train_options
 
 from models import relighting_pt_init, \
@@ -35,7 +35,7 @@ print('--> GPU IDs:', opts.gpu_id)
 logger.print_options(opts)
 
 # Dataloader
-dataset = synthetic.SyntheticData(dataRoot=opts.data_root)
+dataset = synthetic_pt.SyntheticData(dataRoot=opts.data_root)
 dataloader = torch.utils.data.DataLoader(dataset, batch_size=opts.batch_size, \
                     shuffle=opts.shuffle, pin_memory=True, num_workers=opts.workers)
 opts.niter = len(dataloader)

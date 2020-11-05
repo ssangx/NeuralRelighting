@@ -1,29 +1,13 @@
 */__pycache__
 
-train_pt_cas.py
-
-train_env.py
-train_env_cas.py
-
-finetune_env.py
-env_edit.py
-
-dataset/brdf_eval.py
-dataset/brdf_env.py
-dataset/brdf_env_eval.py
-dataset/loader.py
-dataset/pickle.py
-
+env/
 data/dataset
 
-env/
+dataset/synthetic_env.py
 
-models/cascade_env.py
-models/cascade_pt.py
-models/cascade2_env.py
-models/cascade2_pt.py
-models/finetune_env.py
-models/initial_env.py
-models/initial_hemi.py
+models/relighting_env_init.py
+models/relighting_env_cas1.py
+models/relighting_env_cas2.py
 
 clean.py
+train_env.py

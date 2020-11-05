@@ -36,3 +36,8 @@ You can download the synthetic dataset [here](https://drive.google.com/file/d/1k
 ## Training
 
 You can train the model for point light manipulation by yourself, by running `train_pt.py`.
+
+
+## Contact
+
+I am still prepare the data and code for relighting under point lights and arbitrary environments, but it will still take some time to do that since I need to focus on my work :(. If you need the code and data immediately, please feel free to contact me by email, I can send you the experiment codes for current use. Thanks.
