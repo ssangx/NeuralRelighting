@@ -1,13 +1,5 @@
 */__pycache__
 
-env/
 data/dataset
 
-dataset/synthetic_env.py
-
-models/relighting_env_init.py
-models/relighting_env_cas1.py
-models/relighting_env_cas2.py
-
 clean.py
-train_env.py
