@@ -9,7 +9,7 @@
 Code release for our ECCV2020 paper "Single-Shot Neural Relighting and SVBRDF Estimation".
 
 
-**This page is still under-construction. The currently released codes are used for inference with our pre-trained models and captured images.**
+**This page is still under-construction. Will finish this README page after releasing all codes and data.**
 
 
 
@@ -35,7 +35,9 @@ You can download the synthetic dataset [here](https://drive.google.com/file/d/1k
 
 ## Training
 
-You can train the model for point light manipulation by yourself, by running `train_pt.py`.
+1. Train the model for point light manipulation by yourself, by running `train_pt.py`.
+
+2. Train the model for relighting under arbitrary environments and point light, by running `train_env.py`.
 
 
 ## Contact
