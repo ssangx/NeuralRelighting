@@ -51,7 +51,7 @@ if opts.cascade == 2:
 # Train models
 print('--> start to train')
 for epoch in range(opts.start_epoch, opts.nepoch[0]):
-    prefetcher = synthetic.DataPrefetcher(dataloader)
+    prefetcher = synthetic_pt.DataPrefetcher(dataloader)
     data = prefetcher.next()
     i = 0
     while data is not None:
