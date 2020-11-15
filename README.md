@@ -34,13 +34,13 @@ data
 Put your own test images under `real`. Then run `test_real_env.py` or `test_real_pt.py` to do inference. The estimated albedo, normal, roughness and depth, as well as the relighting images and videos will be shown under `data/output`.
 
 
-## Data prepareation
+## Data preparation
 
 ### 1. Relighting under a single point light
 Please download the synthetic dataset [here](https://drive.google.com/file/d/1kmgPzBhhZpozNA7QH2FOmfM51m6CKwNc/view?usp=sharing). It contains all the materials and shape parameters (albedo, normal, roughness and depth) used for rendering. There are also image renderings included inside this dataset. We also provide the script `rendering.py` for you to render your own dataset. Unzip and rename it as 'SyntheticPt'.
 
 
-### 2. Relighting under a point light + arbitray environments
+### 2. Relighting under point light + arbitray environments
 Please download the synthetic dataset [here](http://cseweb.ucsd.edu/~viscomp/projects/SIGA18ShapeSVBRDF/Data.zip). Unzip and rename it as 'SyntheticEnv'.
 
 
