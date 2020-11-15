@@ -1,1 +1,0 @@
-{"name": "relighting_env", "train": true, "workers": 4, "batch_size": 4, "shuffle": true, "image_size": 256, "data_root": "./data/dataset/Synthetic", "cuda": true, "nepoch": [14, 10, 9], "reuse": false, "gpu_id": [0], "start_epoch": 0, "outf": "./data", "cascade": 0, "niter": 45}

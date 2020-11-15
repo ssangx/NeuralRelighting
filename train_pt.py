@@ -19,7 +19,7 @@ opts.reuse = False
 opts.workers = 32
 opts.batch_size = 16
 opts.start_epoch = 0
-opts.data_root = './data/dataset/Synthetic'
+opts.data_root = './data/dataset/SyntheticPt'
 opts.gpu_id = list(range(torch.cuda.device_count()))
 
 # TODO: define the training stage
