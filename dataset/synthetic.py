@@ -34,7 +34,8 @@ class DataPrefetcher():
             self.rough   = self.next_batch['rough' ].cuda(non_blocking=True)
             self.depth   = self.next_batch['depth' ].cuda(non_blocking=True)
             self.seg     = self.next_batch['seg'   ].cuda(non_blocking=True)
-            self.image   = self.next_batch['image_c'].cuda(non_blocking=True)
+            self.SH      = self.next_batch['SH'    ].cuda(non_blocking=True)
+            self.imBg    = self.next_batch['image_bg'].cuda(non_blocking=True)
 
     def next(self):
         torch.cuda.current_stream().wait_stream(self.stream)
@@ -46,23 +47,24 @@ class DataPrefetcher():
         rough  = self.rough
         depth  = self.depth
         seg    = self.seg
+        SH     = self.SH
+        imBg   = self.imBg
 
-        image  = self.image
-        
         self.preload()
 
-        return {'albedo':  albedo,
-                'normal':  normal,
-                'rough':   rough,
-                'depth':   depth,
-                'seg':     seg,
-                'image_c': image}
+        return {'albedo' : albedo,
+                'normal' : normal,
+                'rough'  : rough,
+                'depth'  : depth,
+                'seg'    : seg,
+                'SH'     : SH,
+                'image_bg': imBg}
 
 
 class SyntheticData(Dataset):
     def __init__(self, dataRoot, imSize=256, isRandom=True, phase='TRAIN', rseed=None):
         dataRoot = osp.join(dataRoot, phase.lower())
-        print('--> dara root: %s' % dataRoot)
+        print('--> data root: %s' % dataRoot)
         
         if not osp.exists(dataRoot):
             raise ValueError('Wrong data root!')
@@ -81,11 +83,11 @@ class SyntheticData(Dataset):
             self.roughList  = pk_dict['rough_list']
             self.depthList  = pk_dict['depth_list']
             self.segList    = pk_dict['seg_list']
-            self.images     = pk_dict['images_list']
-            self.lights     = pk_dict['lights_list']
+            self.SHList     = pk_dict['SH_list']
+            self.bgList     = pk_dict['bg_list']
         else:
             print('--> you are not using `pickle` for fast loading, \
-                    please use `python dataset/make_pickle.py` to create one')
+                    please use `python dataset/make_pkl.py` to create one')
             shapeList = glob.glob(osp.join(dataRoot, 'Shape__*') )
             shapeList = sorted(shapeList)
 
@@ -101,20 +103,19 @@ class SyntheticData(Dataset):
             self.normalList = [x.replace('albedo', 'normal') for x in self.albedoList]
             self.roughList = [x.replace('albedo', 'rough') for x in self.albedoList]
             self.segList = [x.replace('albedo', 'seg') for x in self.albedoList]
-
-            # Rendered Image
-            self.imPList = [x.replace('albedo', 'imgPoint') for x in self.albedoList]
-
             # Geometry
             self.depthList = [x.replace('albedo', 'depth').replace('png', 'dat') for x in self.albedoList]
 
-            # All images
-            self.images = []
-            self.lights = []
+            # Bg
+            self.bgList = [x.replace('albedo', 'imgEnv') for x in self.albedoList]
+
+            # Environment Map
+            self.SHList = []
             for x in self.albedoList:
-                img_names, lights = self.get_image_name(x)
-                self.images.append(img_names)
-                self.lights.append(lights)
+                suffix = '/'.join(x.split('/')[0:-1])
+                fileName = x.split('/')[-1]
+                fileName = fileName.split('_')
+                self.SHList.append(osp.join(suffix, '_'.join(fileName[0:2]) + '.npy'))
 
         # Permute the image list
         self.count = len(self.albedoList)
@@ -148,6 +149,7 @@ class SyntheticData(Dataset):
         rough = self.loadImage(self.roughList[idx])[0:1, :, :]
         rough = (rough * seg)
 
+        # Read depth
         with open(self.depthList[idx], 'rb') as f:
             byte = f.read()
             if len(byte) == 256 * 256 * 3 * 4:
@@ -169,31 +171,30 @@ class SyntheticData(Dataset):
                     depth = depth[:, ::8, ::8]
                 depth = depth * seg
 
-        assert ([0., 0., 0.] in self.lights[idx])
-        for img, lit in zip(self.images[idx], self.lights[idx]):
-            if lit == [0., 0., 0.]:
-                image_name = img
-        image = self.loadImage(image_name, isGama=True) * seg
-        image = np.clip(image, -1, 1)
+        # Read SH
+        if not os.path.isfile(self.SHList[self.perm[ind]]):
+            print('Fail to load {0}'.format(self.SHList[self.perm[ind]]))
+            SH = np.zeros([3, 9], dtype=np.float32)
+        else:
+            SH = np.load(self.SHList[self.perm[ind]]).transpose([1, 0] )[:, 0:9]
+            SH = SH.astype(np.float32)[::-1, :]
+
+        # Read backgrounds
+        imBg = self.loadImage(self.bgList[self.perm[ind]], isGama=True)
+
+        # Scale the Environment
+        scaleEnv = 0.5
+        imBg = (((imBg + 1) * 0.5) * scaleEnv) * (1 - seg)
+        SH = SH * scaleEnv
 
         batchDict = {'albedo' : albedo,
                      'normal' : normal,
                      'rough'  : rough,
                      'depth'  : depth,
                      'seg'    : seg,
-                     'image_c': image}
+                     'SH'     : SH,
+                     'image_bg': imBg}
         return batchDict
-
-
-    def get_image_name(self, albedo_name):
-        name = albedo_name
-        img_names = glob.glob(name.replace('albedo', 'image_*'))
-        assert len(img_names) == 3
-        lights_str = [n.replace('[', '\t').replace(']', '\t').split('\t')[1] for n in img_names]
-        lights = []
-        for l in lights_str:
-            lights.append([float(i) for i in l.split()])
-        return img_names, lights
 
     def loadImage(self, imName, isGama=False):
         if not os.path.isfile(imName):
@@ -219,7 +220,3 @@ class SyntheticData(Dataset):
         assert( (w0 == h0) )
         im = im.resize((self.imSize, self.imSize), Image.ANTIALIAS)
         return im
-
-    def loadNpy(self, name):
-        data = np.load(name)
-        return data

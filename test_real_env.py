@@ -9,7 +9,7 @@ import scipy.ndimage as ndimage
 import torchvision.utils as vutils
 
 from options import test_options
-from models import network, render
+from models import network, renderer
 
 from PIL import Image
 
@@ -41,7 +41,8 @@ decoderRef2_brdf = nn.DataParallel(network.RefineDecoderBRDF(), device_ids=opts.
 decoderRef2_render = nn.DataParallel(network.RefineDecoderRender(litc=30), device_ids=opts.gpu_id).cuda()
 env_cas2predictor = nn.DataParallel(network.RefineDecoderEnv(), device_ids=opts.gpu_id).cuda()
 
-render_layer = render.RenderLayerPointLightEnvTorch()
+render_layer = renderer.RenderLayerPointLightEnvTorch()
+
 def _fix(model):
     model.eval()
     for param in model.parameters():

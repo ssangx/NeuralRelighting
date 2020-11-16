@@ -2,7 +2,5 @@
 
 data/dataset
 
-eval_env.py
-eval_pt.py
-
 clean.py
+rendering_testset.py

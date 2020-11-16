@@ -92,8 +92,13 @@ class Model():
         self.depth  = data['depth']
         self.mask   = data['seg']
 
-        self.image_s = data['image_c']
         self.light_s = torch.zeros(self.albedo.size(0), 3).float().cuda()
+        self.image_s = 2 * self.render_layer.forward_batch(self.albedo, \
+                                                           self.normal, \
+                                                           self.rough, \
+                                                           self.depth, \
+                                                           self.mask, \
+                                                           self.light_s) - 1
 
         self.light_t = self.gen_light_batch(self.albedo.size(0))
         self.image_t = 2 * self.render_layer.forward_batch(self.albedo, \
@@ -203,7 +208,7 @@ class Model():
         self.error_list_total.clear()
         
     def save_error_to_file(self, epoch):
-        path = '%s/%s/epoch_%s/errors' % (self.opts.outf, self.name, str(epoch))
+        path = '%s/%s/init/epoch_%s/errors' % (self.opts.outf, self.name, str(epoch))
         if not os.path.exists(path):
             os.makedirs(path)
         np.save('{0}/albedo_error_{1}.npy'.format(path, epoch), np.array(self.error_save_albedo))

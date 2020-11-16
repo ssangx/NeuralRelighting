@@ -40,7 +40,7 @@ class Model():
         self.env_predictor = nn.DataParallel(network.envmapInitial(), device_ids=self.opts.gpu_id).cuda()
 
         print('--> loading saved model')
-        path = '%s/%s/state_dict_13/models' % (self.opts.outf, self.name)
+        path = '%s/%s/init/epoch_13/models' % (self.opts.outf, self.name)
         self.encoder.load_state_dict(torch.load( '%s/encoder.pth' % path, map_location=lambda storage, loc:storage))
         self.decoder_brdf.load_state_dict(torch.load('%s/decoder_brdf.pth' % path, map_location=lambda storage, loc:storage))
         self.decoder_render.load_state_dict(torch.load('%s/decoder_render.pth' % path, map_location=lambda storage, loc:storage))
@@ -223,7 +223,7 @@ class Model():
         self.optimizerEnv.step()
 
     def save_cur_sample(self, epoch):
-        path = '%s/%s/cas1/state_dict_%s/samples' % (self.opts.outf, self.name, str(epoch))
+        path = '%s/%s/cas1/epoch_%s/samples' % (self.opts.outf, self.name, str(epoch))
         if not os.path.exists(path):
             os.makedirs(path)
         vutils.save_image(((((self.image_s_pe+1.0)/2.0))**(1.0/2.2)).data,
@@ -274,7 +274,7 @@ class Model():
         self.error_list_env.clear()
         
     def save_error_to_file(self, epoch):
-        path = '%s/%s/cas1/state_dict_%s/errors' % (self.opts.outf, self.name, str(epoch))
+        path = '%s/%s/cas1/epoch_%s/errors' % (self.opts.outf, self.name, str(epoch))
         if not os.path.exists(path):
             os.makedirs(path)
         np.save('{0}/albedo_error_{1}.npy'.format(path, epoch), np.array(self.error_save_albedo))
@@ -287,7 +287,7 @@ class Model():
 
     def save_cur_checkpoint(self, epoch):
         print('--> saving checkpoints')
-        path = '%s/%s/cas1/state_dict_%s/models' % (self.opts.outf, self.name, str(epoch))
+        path = '%s/%s/cas1/epoch_%s/models' % (self.opts.outf, self.name, str(epoch))
         if not os.path.exists(path):
             os.makedirs(path)
         torch.save(self.encoderRef.state_dict(),  '%s/encoderRef.pth'  % path)
@@ -298,7 +298,7 @@ class Model():
 
     def load_saved_checkpoint(self, start_epoch):
         print('--> loading saved model')
-        path = '%s/%s/cas1/state_dict_%s/models' % (self.opts.outf, self.name, str(start_epoch-1))
+        path = '%s/%s/cas1/epoch_%s/models' % (self.opts.outf, self.name, str(start_epoch-1))
         self.encoderRef.load_state_dict(torch.load( '%s/encoderRef.pth'  % path, map_location=lambda storage, loc:storage))
         self.decoderRef_brdf.load_state_dict(torch.load('%s/decoderRef_brdf.pth' % path, map_location=lambda storage, loc:storage))
         self.decoderRef_render.load_state_dict(torch.load('%s/decoderRef_render.pth' % path, map_location=lambda storage, loc:storage))
@@ -306,7 +306,7 @@ class Model():
 
     def load_saved_loss(self, epoch):
         epoch = epoch - 1
-        path = '%s/%s/cas1/state_dict_%s/errors' % (self.opts.outf, self.name, str(epoch))
+        path = '%s/%s/cas1/epoch_%s/errors' % (self.opts.outf, self.name, str(epoch))
         if not os.path.exists(path):
             raise ValueError('No such files: %s' % path)
         self.error_save_albedo = np.load('{0}/albedo_error_{1}.npy'.format(path, epoch)).tolist()

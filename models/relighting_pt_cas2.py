@@ -129,8 +129,13 @@ class Model():
         self.depth  = data['depth']
         self.mask   = data['seg']
 
-        self.image_s = data['image_c']
         self.light_s = torch.zeros(self.albedo.size(0), 3).float().cuda()
+        self.image_s = 2 * self.render_layer.forward_batch(self.albedo, \
+                                                           self.normal, \
+                                                           self.rough, \
+                                                           self.depth, \
+                                                           self.mask, \
+                                                           self.light_s) - 1
 
         self.light_t = self.gen_light_batch(self.albedo.size(0))
         self.image_t = 2 * self.render_layer.forward_batch(self.albedo, \

@@ -10,7 +10,7 @@ import scipy.ndimage as ndimage
 import torchvision.utils as vutils
 
 from options import test_options
-from models import network, render
+from models import network, renderer
 
 from PIL import Image
 
@@ -31,7 +31,7 @@ encoder = nn.DataParallel(network.encoderInitial(4), device_ids=opts.gpu_id).cud
 decoder_brdf = nn.DataParallel(network.decoderBRDF(), device_ids=opts.gpu_id).cuda()
 decoder_render = nn.DataParallel(network.decoderRender(), device_ids=opts.gpu_id).cuda()
 
-render_layer = render.RenderLayerPointLightTorch()
+render_layer = renderer.RenderLayerPointLightTorch()
 
 encoderRef = nn.DataParallel(network.RefineEncoder(), device_ids=opts.gpu_id).cuda()
 decoderRef_brdf = nn.DataParallel(network.RefineDecoderBRDF(), device_ids=opts.gpu_id).cuda()
@@ -155,7 +155,7 @@ for _i in range(len(seg_list)):
     img = np.transpose(img, [2, 0, 1])
 
 
-    seg   = torch.from_numpy(seg).cuda().unsqueeze(0)
+    seg = torch.from_numpy(seg).cuda().unsqueeze(0)
 
     image_s = torch.from_numpy(img).cuda().unsqueeze(0) * seg
     light_s = torch.zeros(seg.size(0), 3).float().cuda().clamp(0, 1)

@@ -39,7 +39,7 @@ class Model():
         self.decoder_render = nn.DataParallel(network.decoderRender(), device_ids=self.opts.gpu_id).cuda()
 
         print('--> loading pre-trained initial models')
-        path = '%s/%s/state_dict_13/models' % (self.opts.outf, self.name)
+        path = '%s/%s/init/epoch_13/models' % (self.opts.outf, self.name)
         self.encoder.load_state_dict(torch.load( '%s/encoder.pth' % path, map_location=lambda storage, loc:storage))
         self.decoder_brdf.load_state_dict(torch.load('%s/decoder_brdf.pth' % path, map_location=lambda storage, loc:storage))
         self.decoder_render.load_state_dict(torch.load('%s/decoder_render.pth' % path, map_location=lambda storage, loc:storage))
@@ -111,8 +111,13 @@ class Model():
         self.depth  = data['depth']
         self.mask   = data['seg']
 
-        self.image_s = data['image_c']
         self.light_s = torch.zeros(self.albedo.size(0), 3).float().cuda()
+        self.image_s = 2 * self.render_layer.forward_batch(self.albedo, \
+                                                           self.normal, \
+                                                           self.rough, \
+                                                           self.depth, \
+                                                           self.mask, \
+                                                           self.light_s) - 1
 
         self.light_t = self.gen_light_batch(self.albedo.size(0))
         self.image_t = 2 * self.render_layer.forward_batch(self.albedo, \
