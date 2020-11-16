@@ -67,4 +67,4 @@ Create the index file of all file names for the training set or test set by runn
 
 ## Evaluation
 
-1. Evaluate the trained model by running `python eval_env.py` and `python eval_pt.env`.
+1. Evaluate the trained model by running `python eval_env.py` and `python eval_pt.py`.
