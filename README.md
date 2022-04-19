@@ -39,7 +39,7 @@ Put your own test images under `real`. Then run `test_real_env.py` or `test_real
 
 ### Download
 
-Please download the synthetic dataset [here](https://drive.google.com/file/d/1HyeKbdkpw0oc0HYBN3ln0kaF2uHilaph/view?usp=sharing). It contains all the materials and shape parameters (albedo, normal, roughness and depth) used for rendering. We also provide the script `rendering.py` for you to show how to render your own dataset. Unzip and rename it as `Synthetic`.
+Please download the synthetic dataset [here](https://drive.google.com/file/d/10bHDfrNPPcge8LqaOlLNyJ6IjGKkK6PF/view?usp=sharing). It contains all the materials and shape parameters (albedo, normal, roughness and depth) used for rendering. We also provide the script `rendering.py` for you to show how to render your own dataset. Unzip and rename it as `Synthetic`.
 
 
 Make sure the structure is:
