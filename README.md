@@ -1,7 +1,7 @@
 # Single-Shot Neural Relighting and SVBRDF Estimation ([Project](http://cseweb.ucsd.edu/~viscomp/projects/ECCV20NeuralRelighting/))
 
 
-[Shen Sang](https://sites.google.com/view/ssang), [Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/)
+[Shen Sang](https://ssangx.github.io/), [Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/)
 
 
 ## Overview
