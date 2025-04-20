@@ -1,4 +1,4 @@
-# Single-Shot Neural Relighting and SVBRDF Estimation ([Project](http://cseweb.ucsd.edu/~viscomp/projects/ECCV20NeuralRelighting/))
+# Single-Shot Neural Relighting and SVBRDF Estimation
 
 
 [Shen Sang](https://ssangx.github.io/), [Manmohan Chandraker](https://cseweb.ucsd.edu/~mkchandraker/)
@@ -6,7 +6,7 @@
 
 ## Overview
 
-This is the official code release of our ECCV2020 paper "Single-Shot Neural Relighting and SVBRDF Estimation". Please consider citing this paper if you find the code and data useful in your project. Please contact us by ssang@eng.ucsd.edu if you have any questions or issues.
+This is the official code release of our ECCV2020 paper "Single-Shot Neural Relighting and SVBRDF Estimation". Please consider citing this paper if you find the code and data useful in your project.
 
 
 
@@ -67,4 +67,4 @@ Create the index file of all file names for the training set or test set by runn
 
 ## Evaluation
 
-1. Evaluate the trained model by running `python eval_env.py` and `python eval_pt.env`.
+Evaluate the trained model by running `python eval_env.py` and `python eval_pt.env`.
